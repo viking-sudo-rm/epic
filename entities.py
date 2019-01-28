@@ -18,6 +18,7 @@ class Entity:
 
 class Person(Entity):
 
+    @overrides(Entity)
     def interact(self, event: UpdateEvent):
         quote = "Yo boi, you talking to %s?" % self.name
         print("%s: %s" % (self.name, quote))
@@ -30,6 +31,7 @@ class Object(Entity):
         super().__init__(name, position)
         self._callback_fn = callback_fn
 
+    @overrides(Entity)
     def interact(self, event: UpdateEvent):
         if self._callback_fn is not None:
             self._callback_fn(event)
