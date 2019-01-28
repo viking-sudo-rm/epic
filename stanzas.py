@@ -1,4 +1,5 @@
 from abc import ABCMeta
+from typing import Text
 
 from events import UpdateEvent
 from utils import overrides
@@ -12,7 +13,7 @@ class Stanza(metaclass=ABCMeta):
 
 class TemplateStanza(Stanza):
 
-    def __init__(self, text):
+    def __init__(self, text: Text):
         self._text = text
 
     @overrides(Stanza)

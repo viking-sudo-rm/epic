@@ -1,6 +1,9 @@
 from typing import Text
 
+
 class Epic:
+
+    # TODO: Might want to encapsulate this stuff in GameState or something.
 
     def __init__(self):
         self._stanzas = []
@@ -15,15 +18,3 @@ class Epic:
 
     def set_hero(self, hero):
         self.hero = hero
-
-
-class GameState:
-
-    def __init__(self, epic, scene, world):
-        self.epic = epic
-        self.scene = scene
-        self.world = world
-
-    # @classmethod
-    # def create_fresh(cls):
-    #     game_state = cls()

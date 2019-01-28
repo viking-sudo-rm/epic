@@ -1,5 +1,8 @@
+from typing import Callable
+
 from events import UpdateEvent
 from utils import overrides
+
 
 class Entity:
 
@@ -27,7 +30,10 @@ class Person(Entity):
 
 class Object(Entity):
 
-    def __init__(self, name, position=None, callback_fn=None):
+    def __init__(self,
+                 name,
+                 position=None,
+                 callback_fn: Callable[[UpdateEvent], None] = None):
         super().__init__(name, position)
         self._callback_fn = callback_fn
 
