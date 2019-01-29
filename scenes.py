@@ -20,7 +20,7 @@ class Scene(metaclass=ABCMeta):
 class StanzaScene(Scene):
     """Display text and then transition."""
 
-    def __init__(self, next_scene: Scene, stanza: Stanza):
+    def __init__(self, stanza: Stanza, next_scene: Text):
         self._next_scene = next_scene
         self._stanza = stanza
 
@@ -31,19 +31,19 @@ class StanzaScene(Scene):
         print(text)
         input()
         event.epic.add_stanza(text)
-        return self._next_scene
+        return event.get_scene(self._next_scene)
 
 
 class SelectionScene(Scene):
     """Choose a character at the beginning."""
 
     def __init__(self,
-                 next_scene: Scene,
                  prompt: Text,
                  options: List[Any],
                  value_fn: Callable[[Any], Text],
                  select_fn: Callable[[Epic], Callable[[Any], None]],
-                 stanzas: Dict[Text, Stanza]):
+                 stanzas: Dict[Text, Stanza],
+                 next_scene: Text):
         self._next_scene = next_scene
         self._prompt = prompt
         self._options = options
@@ -64,7 +64,7 @@ class SelectionScene(Scene):
         stanza_name = "select_" + self._value_fn(selection)
         if stanza_name in self._stanzas:
             event.epic.add_stanza(self._stanzas[stanza_name].generate(event))
-        return self._next_scene
+        return event.get_scene(self._next_scene)
 
 
 class LocationScene(Scene):
@@ -92,8 +92,8 @@ class LocationScene(Scene):
         elif action == "interact":
             for entity in self._location._entities:
                 if entity.name.lower() == words[1]:
-                    entity.interact(event)
-                    return self
+                    next_scene = entity.interact(event)
+                    return self if next_scene is None else next_scene
         elif action == "fight":
             for entity in self._location._entities:
                 if entity.name.lower() == words[1]:
