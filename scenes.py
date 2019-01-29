@@ -1,5 +1,5 @@
 from abc import ABCMeta, abstractmethod
-from typing import Any, Callable, Dict, List, Text
+from typing import Any, Union, Callable, Dict, List, Text
 
 from entities import Entity
 from epic import Epic
@@ -17,10 +17,13 @@ class Scene(metaclass=ABCMeta):
         raise NotImplementedError
 
 
+NextSceneType = Union[Text, Callable[[UpdateEvent], Text]]
+
+
 class StanzaScene(Scene):
     """Display text and then transition."""
 
-    def __init__(self, stanza: Stanza, next_scene: Text):
+    def __init__(self, stanza: Stanza, next_scene: NextSceneType):
         self._next_scene = next_scene
         self._stanza = stanza
 
@@ -43,7 +46,7 @@ class SelectionScene(Scene):
                  value_fn: Callable[[Any], Text],
                  select_fn: Callable[[Epic], Callable[[Any], None]],
                  stanzas: Dict[Text, Stanza],
-                 next_scene: Text):
+                 next_scene: NextSceneType):
         self._next_scene = next_scene
         self._prompt = prompt
         self._options = options
@@ -75,6 +78,7 @@ class LocationScene(Scene):
     def __init__(self, location: Location, enter_stanza: Stanza = None):
         self._location = location
         self._enter_stanza = enter_stanza
+        self._first_visit = True
 
     @overrides(Scene)
     def update(self, event: UpdateEvent) -> Scene:
@@ -83,10 +87,11 @@ class LocationScene(Scene):
         print("Entities:", self._location._entities)
 
         self._location.update(event)
-        if event.last_scene is not self and self._enter_stanza is not None:
+        if self._first_visit and self._enter_stanza is not None:
             text = self._enter_stanza.generate(event, CITY=self._location.placename)
             print(text)
             event.epic.add_stanza(text)
+        self._first_visit = False
 
         words = input("Action: ").lower().split(" ")
         print()
@@ -105,6 +110,26 @@ class LocationScene(Scene):
         else:
             print("Unknown command.")
         return self
+
+
+class DuelScene(Scene):
+
+    def __init__(self, enemy: Entity, next_scene: NextSceneType):
+        self._enemy = enemy
+        self._next_scene = next_scene
+
+    @overrides(Scene)
+    def update(self, event: UpdateEvent) -> Scene:
+        print("=" * 10, "DUEL", "=" * 10)
+        print(event.epic.hero, "versus", self._enemy)
+        input()
+        self._enemy.kill()
+        print("You win!")
+        return event.get_scene(self._next_scene)
+
+    @property
+    def location(self):
+        return self._enemy.location
 
 
 class EndScene(Scene):

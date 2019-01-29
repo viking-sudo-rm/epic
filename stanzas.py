@@ -21,3 +21,5 @@ class TemplateStanza(Stanza):
         # TODO: Should have capability for conditionals and stuff.
         kwargs["HERO"] = event.epic.hero.name if event.epic.hero is not None else "Anon"
         return self._text.format(**kwargs).strip()
+
+# TODO: Should mark whether stanza should be included at play time or not.
