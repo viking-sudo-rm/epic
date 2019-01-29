@@ -40,4 +40,4 @@ class Object(Entity):
     @overrides(Entity)
     def interact(self, event: UpdateEvent):
         if self._callback_fn is not None:
-            self._callback_fn(event)
+            return self._callback_fn(event)
