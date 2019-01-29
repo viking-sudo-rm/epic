@@ -1,12 +1,12 @@
 import os
 from typing import Dict, List, Text
 
+from entities import Entity, Person, Object
+from epic import Epic
 from events import UpdateEvent
+from location import Location
 from scenes import LocationScene, Scene, SelectionScene, StanzaScene
 from stanzas import Stanza, TemplateStanza
-from epic import Epic
-from location import Location
-from entities import Entity, Person, Object
 
 
 def load_stanzas() -> Dict[Text, Stanza]:
@@ -30,11 +30,11 @@ def make_locations() -> Dict[Text, Location]:
             Person("Polypugnos"),
             Person("Nemeson"),
             Object("Dock", callback_fn=_dock_callback_fn),
-            ]),
+        ]),
     }
 
 
-def make_scenes(stanzas, locations) -> Scene:
+def make_scenes(stanzas: Dict[Text, Stanza], locations: Dict[Text, Location]) -> Scene:
     scenes = {
         "muse": StanzaScene(stanzas["muse"], next_scene="select_hero"),
         "select_hero": SelectionScene("Choose Hero:",
