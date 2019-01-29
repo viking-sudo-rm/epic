@@ -1,28 +1,29 @@
 Alas, we enter bright {CITY}:
 Bright with the fires of war,
-the inner fires of enemies
-And comrades who fight them.
+and the inner fires of enemies,
+of comrades who fight them.
 Those same fires burn brightest 
 In their extinction, and small pyres
 Act as makeshift funerals across the city.
-It seems as if these flames
+Looking around, it seems these flames
 May envelop the whole city,
 As if they have their own pull,
 Wicking in lives and rooves and towers
-- why else would they crumble?
+- why else would they crumble? -
+And the sight is a fearsome one indeed.
 
 {PLAYER} stands at a cross-roads,
 Awaited in the square,
 Expected to connect sword to skin,
 An alloy of iron and flesh
 That offers slim chances of success,
-But the only hope of restoring the city,
-If anything more than ruins
-Could ever survive the conflict.
+Still the only hope of restoring the city,
+But only if anything more than ruins
+Can survive the destructive conflict.
 
 On the right, a golden ticket out of the city:
 The fields of Poseidon gleam and roll,
 Delineating fire and arousing - cruelly - hope,
 As if it has any right to do so
 In the midst of wars of men,
-And beseigement. 
+And foul beseigement. 
