@@ -63,7 +63,10 @@ class SelectionScene(Scene):
         self._select_fn(event.epic)(selection)
         stanza_name = "select_" + self._value_fn(selection)
         if stanza_name in self._stanzas:
-            event.epic.add_stanza(self._stanzas[stanza_name].generate(event))
+            text = self._stanzas[stanza_name].generate(event)
+            print(text)
+            input()
+            event.epic.add_stanza(text)
         return event.get_scene(self._next_scene)
 
 
@@ -81,8 +84,9 @@ class LocationScene(Scene):
 
         self._location.update(event)
         if event.last_scene is not self and self._enter_stanza is not None:
-            stanza_text = self._enter_stanza.generate(event, CITY=self._location.placename)
-            event.epic.add_stanza(stanza_text)
+            text = self._enter_stanza.generate(event, CITY=self._location.placename)
+            print(text)
+            event.epic.add_stanza(text)
 
         words = input("Action: ").lower().split(" ")
         print()
