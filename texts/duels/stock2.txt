@@ -1,0 +1,4 @@
+What a fight {ENEMY.location.placename} witnessed
+Between {HERO.name} and {ENEMY.name},
+Until an off blow removed {ENEMY.name}'s head -
+Never to fight again, but always to be remembered.

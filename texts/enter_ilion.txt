@@ -1,7 +1,7 @@
 Our tale starts with war:
-The city {ILION},
-bright with the inner fires of enemies,
-of comrades who fight them.
+The city {CITY},
+Bright with the inner fires of enemies,
+Of comrades who fight them.
 
 {HERO.name} stands at a cross-roads,
 A doomed defender,

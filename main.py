@@ -56,7 +56,7 @@ def make_scenes(stanzas: Dict[Text, Stanza], locations: Dict[Text, Location]) ->
         # Intro sequence.
         "muse": StanzaScene(stanzas["muse"], next_scene="select_hero"),
         "select_hero": SelectionScene("Choose Hero:",
-                                      [Entity(name) for name in ["Aeneas", "Dido", "Beowulf"]],
+                                      [Person(name) for name in ["Aeneas", "Dido", "Beowulf"]],
                                       lambda hero: hero.name.lower(),
                                       lambda epic: epic.set_hero,
                                       next_scene="ilion"),

@@ -1,0 +1,7 @@
+{ENEMY.name} cowers back and calls out to their squire Quarellus:
+"Charge {HERO.name} and kill that bastard!"
+Such is not the way of a warrior.
+
+Quarellus, with damaged spear in hand, runs at our champion.
+With aqueous motion, {HERO.name} dodges and grabs Quarellus's spear.
+{HERO.title_nom_pronoun} hurls it back at {ENEMY.name}, killing {ENEMY.acc_pronoun} instantly.
