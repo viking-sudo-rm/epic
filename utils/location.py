@@ -1,7 +1,7 @@
 from typing import List, Text
 
-from entities import Entity
-from events import UpdateEvent
+from .entities import Entity
+from .events import UpdateEvent
 
 class Location:
 

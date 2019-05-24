@@ -1,12 +1,12 @@
 import os
 from typing import Callable, Dict, List, Text
 
-from entities import Entity, Person, Object
-from epic import Epic
-from events import UpdateEvent
-from location import Location
-from scenes import DuelScene, LocationScene, Scene, SelectionScene, StanzaScene
-from stanzas import Stanza, TemplateStanza
+from utils.entities import Entity, Person, Object
+from utils.epic import Epic
+from utils.events import UpdateEvent
+from utils.location import Location
+from utils.scenes import DuelScene, LocationScene, Scene, SelectionScene, StanzaScene
+from utils.stanzas.base import Stanza, TemplateStanza
 
 
 def load_stanzas() -> Dict[Text, Stanza]:
@@ -61,7 +61,7 @@ def make_scenes(stanzas: Dict[Text, Stanza], locations: Dict[Text, Location]) ->
                                       lambda epic: epic.set_hero,
                                       stanzas,
                                       next_scene="ilion"),
-        "ilion": LocationScene(locations["ilion"], stanzas["enter_city"]),
+        "ilion": LocationScene(locations["ilion"], stanzas["enter_ilion"]),
 
         # Run away.
         "sea_escape": StanzaScene(stanzas["sea_escape"], next_scene="sea"),

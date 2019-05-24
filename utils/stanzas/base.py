@@ -1,8 +1,8 @@
 from abc import ABCMeta
+from overrides import overrides
 from typing import Text
 
-from events import UpdateEvent
-from utils import overrides
+from ..events import UpdateEvent
 
 
 class Stanza(metaclass=ABCMeta):
@@ -16,7 +16,7 @@ class TemplateStanza(Stanza):
     def __init__(self, text: Text):
         self._text = text
 
-    @overrides(Stanza)
+    @overrides
     def generate(self, event: UpdateEvent, **kwargs):
         # TODO: Should have capability for conditionals and stuff.
         kwargs["HERO"] = event.epic.hero.name if event.epic.hero is not None else "Anon"

@@ -1,7 +1,6 @@
 from typing import Callable, Text
 
-from events import UpdateEvent
-from utils import overrides
+from .events import UpdateEvent
 
 
 class Entity:

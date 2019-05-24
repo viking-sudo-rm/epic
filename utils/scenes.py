@@ -1,12 +1,12 @@
 from abc import ABCMeta, abstractmethod
+from overrides import overrides
 from typing import Any, Union, Callable, Dict, List, Text
 
-from entities import Entity
-from epic import Epic
-from events import UpdateEvent
-from utils import overrides
-from location import Location
-from stanzas import Stanza
+from .entities import Entity
+from .epic import Epic
+from .events import UpdateEvent
+from .location import Location
+from .stanzas.base import Stanza
 
 
 class Scene(metaclass=ABCMeta):
@@ -27,7 +27,7 @@ class StanzaScene(Scene):
         self._next_scene = next_scene
         self._stanza = stanza
 
-    @overrides(Scene)
+    @overrides
     def update(self, event: UpdateEvent) -> Scene:
         print("=" * 10, "TEXT", "=" * 10)
         text = self._stanza.generate(event)
@@ -54,7 +54,7 @@ class SelectionScene(Scene):
         self._select_fn = select_fn
         self._stanzas = stanzas
 
-    @overrides(Scene)
+    @overrides
     def update(self, event: UpdateEvent) -> Scene:
         print("=" * 10, "SELECTION", "=" * 10)
         print(self._prompt, self._options)
@@ -80,7 +80,7 @@ class LocationScene(Scene):
         self._enter_stanza = enter_stanza
         self._first_visit = True
 
-    @overrides(Scene)
+    @overrides
     def update(self, event: UpdateEvent) -> Scene:
         print("=" * 10, "LOCATION", "=" * 10)
         print("Location:", self._location.placename)
@@ -118,7 +118,7 @@ class DuelScene(Scene):
         self._enemy = enemy
         self._next_scene = next_scene
 
-    @overrides(Scene)
+    @overrides
     def update(self, event: UpdateEvent) -> Scene:
         print("=" * 10, "DUEL", "=" * 10)
         print(event.epic.hero, "versus", self._enemy)
@@ -138,7 +138,7 @@ class EndScene(Scene):
         self._stanza = Stanza
         self._character = character
 
-    @overrides(Scene)
+    @overrides
     def update(self, event: UpdateEvent) -> Scene:
         print("=" * 10, "ENDING", "=" * 10)
         text = self._stanza.generate(event)
