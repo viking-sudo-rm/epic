@@ -10,10 +10,20 @@ class Entity:
     def __init__(self,
                  name: Text,
                  location=None,
-                 callback_fn: Callable[[UpdateEvent], None] = None):
+                 callback_fn: Callable[[UpdateEvent], None] = None,
+                 male=True):
         self.name = name
+        self._male = male
         self.location = location
         self._callback_fn = callback_fn
+
+    @property
+    def nom_pronoun(self):
+        return "he" if self._male else "she"
+
+    @property
+    def acc_pronoun(self):
+        return "him" if self._male else "her"
 
     def __repr__(self):
         return "Entity(%s)" % self.name

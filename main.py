@@ -16,7 +16,8 @@ def load_stanzas() -> Dict[Text, Stanza]:
             path = os.path.join(root, file)
             with open(path) as fh:
                 stanza = TemplateStanza(fh.read())
-                stanzas[file.replace(".txt", "")] = stanza
+                key = path[6:].replace(".txt", "")
+                stanzas[key] = stanza
     return stanzas
 
 
@@ -46,7 +47,6 @@ def make_scenes(stanzas: Dict[Text, Stanza], locations: Dict[Text, Location]) ->
 
     def _ilion_duel_next_scene_selector(event: UpdateEvent) -> Text:
         ilion = event.scene.location
-        print(ilion._entities)
         if len(ilion._entities) > 1:
             return "ilion"
         else:
@@ -59,7 +59,6 @@ def make_scenes(stanzas: Dict[Text, Stanza], locations: Dict[Text, Location]) ->
                                       [Entity(name) for name in ["Aeneas", "Dido", "Beowulf"]],
                                       lambda hero: hero.name.lower(),
                                       lambda epic: epic.set_hero,
-                                      stanzas,
                                       next_scene="ilion"),
         "ilion": LocationScene(locations["ilion"], stanzas["enter_ilion"]),
 
@@ -82,7 +81,7 @@ def main():
     epic = Epic()
 
     while scene is not None:
-        update_event = UpdateEvent(epic, scene, last_scene, scenes)
+        update_event = UpdateEvent(epic, scene, last_scene, scenes, stanzas)
         last_scene = scene
         scene = scene.update(update_event)
 

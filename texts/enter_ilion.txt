@@ -12,7 +12,7 @@ Wicking in lives and rooves and towers
 - why else would they crumble? -
 And the sight is a fearsome one indeed.
 
-{HERO} stands at a cross-roads,
+{HERO.name} stands at a cross-roads,
 Awaited in the square,
 Expected to connect sword to skin,
 An alloy of iron and flesh

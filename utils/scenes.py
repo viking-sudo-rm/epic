@@ -1,6 +1,7 @@
 from abc import ABCMeta, abstractmethod
 from overrides import overrides
 from typing import Any, Union, Callable, Dict, List, Text
+import random
 
 from .entities import Entity
 from .epic import Epic
@@ -45,14 +46,12 @@ class SelectionScene(Scene):
                  options: List[Any],
                  value_fn: Callable[[Any], Text],
                  select_fn: Callable[[Epic], Callable[[Any], None]],
-                 stanzas: Dict[Text, Stanza],
                  next_scene: NextSceneType):
         self._next_scene = next_scene
         self._prompt = prompt
         self._options = options
         self._value_fn = value_fn
         self._select_fn = select_fn
-        self._stanzas = stanzas
 
     @overrides
     def update(self, event: UpdateEvent) -> Scene:
@@ -65,8 +64,8 @@ class SelectionScene(Scene):
                 break
         self._select_fn(event.epic)(selection)
         stanza_name = "select_" + self._value_fn(selection)
-        if stanza_name in self._stanzas:
-            text = self._stanzas[stanza_name].generate(event)
+        if stanza_name in event.stanzas:
+            text = event.stanzas[stanza_name].generate(event)
             print(text)
             input()
             event.epic.add_stanza(text)
@@ -103,10 +102,10 @@ class LocationScene(Scene):
                 if entity.name.lower() == words[1]:
                     next_scene = entity.interact(event)
                     return self if next_scene is None else next_scene
-        elif action == "fight":
-            for entity in self._location._entities:
-                if entity.name.lower() == words[1]:
-                    self._location._entities.remove(entity)
+        # elif action == "fight":
+        #     for entity in self._location._entities:
+        #         if entity.name.lower() == words[1]:
+        #             self._location._entities.remove(entity)
         else:
             print("Unknown command.")
         return self
@@ -124,8 +123,19 @@ class DuelScene(Scene):
         print(event.epic.hero, "versus", self._enemy)
         input()
         self._enemy.kill()
-        print("You win!")
+        text = self.get_stock_duel_text(event)
+        event.epic.add_stanza(text)
+        print(text)
         return event.get_scene(self._next_scene)
+
+    def get_stock_duel_text(self, event, weapon="lance"):
+        """Return stock duel text picked uniformly at random from duel stanzas."""
+        num_duels = sum(1 for name in event.stanzas if name.startswith("duels/stock"))
+        duel_idx = random.randint(0, num_duels - 1)
+        stanza = event.stanzas["duels/stock%d" % duel_idx]
+        return stanza.generate(event,
+                               ENEMY=self._enemy,
+                               WEAPON=weapon)
 
     @property
     def location(self):

@@ -1,0 +1,5 @@
+With {WEAPON} whizzing, {HERO.name} smites {ENEMY.name}.
+
+The last cries of vanquished {ENEMY.name} ring out,
+never to be heard again,
+except by shades teeming in the dark.
