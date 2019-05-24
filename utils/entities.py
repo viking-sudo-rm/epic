@@ -1,6 +1,7 @@
 from typing import Callable, Text
 
 from .events import UpdateEvent
+from .pronouns import Pronoun
 
 
 class Entity:
@@ -32,25 +33,9 @@ class Entity:
 
 class Person(Entity):
 
-    def __init__(self, *args, male=True, **kwargs):
+    def __init__(self, *args, pronoun=Pronoun.MASCULINE, **kwargs):
         super().__init__(*args, **kwargs)
-        self._male = male
-    
-    @property
-    def nom_pronoun(self):
-        return "he" if self._male else "she"
-
-    @property
-    def acc_pronoun(self):
-        return "him" if self._male else "her"
-
-    @property
-    def title_nom_pronoun(self):
-        return self.nom_pronoun.title()
-
-    @property
-    def title_acc_pronoun(self):
-        return self.acc_pronoun.title()
+        self.pronoun = pronoun
 
 
 class Object(Entity):

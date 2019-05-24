@@ -11,16 +11,16 @@ class Location:
         self.placename = placename
         self._entities = entities
         for entity in self._entities:
-        	entity.location = self
+            entity.location = self
 
     def get_entity(self, name: Text) -> Entity:
-    	# TODO: Might want to change implementation of self._entities.
+        # TODO: Might want to change implementation of self._entities.
         name_predicate = lambda entity: entity.name == name
         results = filter(name_predicate, self._entities)
-    	return results[0] if len(results) > 0 else None
+        return results[0] if len(results) > 0 else None
 
     def remove_entity(self, entity: Entity):
-    	self._entities.remove(entity)
+        self._entities.remove(entity)
 
     def update(self, event: UpdateEvent):
         pass

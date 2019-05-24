@@ -5,6 +5,7 @@ from utils.entities import Entity, Person, Object
 from utils.epic import Epic
 from utils.events import UpdateEvent
 from utils.location import Location
+from utils.pronouns import Pronoun
 from utils.scenes import DuelScene, LocationScene, Scene, SelectionScene, StanzaScene
 from utils.stanzas.base import Stanza, TemplateStanza
 
@@ -43,6 +44,14 @@ def make_locations() -> Dict[Text, Location]:
     }
 
 
+def make_heroes() -> List[Person]:
+    return [
+        Person("Aeneas"),
+        Person("Dido", Pronoun.FEMININE),
+        Person("Beowulf"),
+    ]
+
+
 def make_scenes(stanzas: Dict[Text, Stanza], locations: Dict[Text, Location]) -> Scene:
 
     def _ilion_duel_next_scene_selector(event: UpdateEvent) -> Text:
@@ -56,7 +65,7 @@ def make_scenes(stanzas: Dict[Text, Stanza], locations: Dict[Text, Location]) ->
         # Intro sequence.
         "muse": StanzaScene(stanzas["muse"], next_scene="select_hero"),
         "select_hero": SelectionScene("Choose Hero:",
-                                      [Person(name) for name in ["Aeneas", "Dido", "Beowulf"]],
+                                      make_heroes(),
                                       lambda hero: hero.name.lower(),
                                       lambda epic: epic.set_hero,
                                       next_scene="ilion"),

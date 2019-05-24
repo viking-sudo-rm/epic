@@ -4,4 +4,4 @@ Such is not the way of a warrior.
 
 Quarellus, with damaged spear in hand, runs at our champion.
 With aqueous motion, {HERO.name} dodges and grabs Quarellus's spear.
-{HERO.title_nom_pronoun} hurls it back at {ENEMY.name}, killing {ENEMY.acc_pronoun} instantly.
+{HERO.pronoun.title_nom} hurls it back at {ENEMY.name}, killing {ENEMY.pronoun.acc} instantly.

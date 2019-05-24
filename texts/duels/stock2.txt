@@ -1,4 +1,3 @@
-What a fight {ENEMY.location.placename} witnessed
-Between {HERO.name} and {ENEMY.name},
-Until an off blow removed {ENEMY.name}'s head -
-Never to fight again, but always to be remembered.
+{ENEMY.location.placename} saw {HERO.name} and {ENEMY.name} trade blows
+Until brave {ENEMY.name}'s head was struck off -
+{ENEMY.pronoun.title_gen} last breath trailed off from life to memory.
