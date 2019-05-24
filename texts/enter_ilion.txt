@@ -1,19 +1,10 @@
-Alas, we enter bright {CITY}:
-Bright with the fires of war,
-and the inner fires of enemies,
+Our tale starts with war:
+The city {ILION},
+bright with the inner fires of enemies,
 of comrades who fight them.
-Those same fires burn brightest 
-In their extinction, and small pyres
-Act as makeshift funerals across {CITY}.
-Looking around, it seems these flames
-May envelop the whole city,
-As if they have their own pull,
-Wicking in lives and rooves and towers
-- why else would they crumble? -
-And the sight is a fearsome one indeed.
 
 {HERO.name} stands at a cross-roads,
-Awaited in the square,
+A doomed defender,
 Expected to connect sword to skin,
 An alloy of iron and flesh
 That offers slim chances of success
@@ -27,3 +18,6 @@ Delineating fire and arousing - cruelly - hope,
 As if it has any right to do so
 In the midst of wars of men,
 And foul beseigement.
+
+A hard choice our hero faces:
+To leave and live, or fight and die?
