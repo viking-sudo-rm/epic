@@ -1,8 +1,8 @@
 {HERO.name} runs towards the dock,
-fleeing doomed combat for
-survival and renewal.
+Fleeing doomed combat for
+Survival and renewal.
 
 The waves crash as {HERO.name} boards the ship.
-Burning homeland behind him,
-new opportunity in front.
+Burning homeland behind {HERO.pronoun.acc},
+New opportunity in front.
 It was time to set a new foot forward.

@@ -1,12 +1,11 @@
 import os
 from typing import Dict, Text
 
-from locations import make_locations
-from scenes import make_scenes
-
-from utils.epic import Epic
-from utils.events import UpdateEvent
-from utils.stanzas.base import Stanza, TemplateStanza
+from src.core.epic import Epic
+from src.core.events import UpdateEvent
+from src.core.stanzas.base import Stanza, TemplateStanza
+from src.world.locations import make_locations
+from src.world.scenes import make_scenes
 
 
 def load_stanzas() -> Dict[Text, Stanza]:

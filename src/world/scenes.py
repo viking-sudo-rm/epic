@@ -1,12 +1,12 @@
 from typing import Dict, Text
 
-from heroes import make_heroes
+from .heroes import make_heroes
 
-from utils.events import UpdateEvent
-from utils.location import Location
-from utils.scenes import DuelScene, LocationScene, Scene, SelectionScene
-from utils.scenes import StanzaScene
-from utils.stanzas.base import Stanza
+from src.core.events import UpdateEvent
+from src.core.location import Location
+from src.core.scenes import DuelScene, LocationScene, Scene, SelectionScene
+from src.core.scenes import StanzaScene
+from src.core.stanzas.base import Stanza
 
 
 def make_scenes(stanzas: Dict[Text, Stanza],
@@ -19,11 +19,14 @@ def make_scenes(stanzas: Dict[Text, Stanza],
         else:
             return "defended_ilion"
 
+    heroes = make_heroes()
+    print([hero.pronoun for hero in heroes])
+
     scenes = {
         # Intro sequence.
         "muse": StanzaScene(stanzas["muse"], next_scene="select_hero"),
         "select_hero": SelectionScene("Choose Hero:",
-                                      make_heroes(),
+                                      heroes,
                                       lambda hero: hero.name.lower(),
                                       lambda epic: epic.set_hero,
                                       next_scene="ilion"),

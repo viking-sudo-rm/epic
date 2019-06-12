@@ -33,11 +33,10 @@ class Entity:
 
 class Person(Entity):
 
-    def __init__(self, *args, pronoun=Pronoun.MASCULINE, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self, name, pronoun=Pronoun.MASCULINE, **kwargs):
+        super().__init__(name, **kwargs)
         self.pronoun = pronoun
 
 
 class Object(Entity):
     pass
-        

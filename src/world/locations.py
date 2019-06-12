@@ -1,9 +1,9 @@
 from typing import Callable, Dict, Text
 
-from utils.entities import Object, Person
-from utils.events import UpdateEvent
-from utils.location import Location
-from utils.scenes import Scene
+from src.core.entities import Object, Person
+from src.core.events import UpdateEvent
+from src.core.location import Location
+from src.core.scenes import Scene
 
 
 def make_locations() -> Dict[Text, Location]:

@@ -1,11 +1,11 @@
 from typing import List
 
-from utils.entities import Person, Pronoun
+from src.core.entities import Person, Pronoun
 
 
 def make_heroes() -> List[Person]:
     return [
         Person("Aeneas"),
-        Person("Dido", Pronoun.FEMININE),
+        Person("Dido", pronoun=Pronoun.FEMININE),
         Person("Beowulf"),
     ]
