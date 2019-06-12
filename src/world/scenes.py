@@ -1,8 +1,9 @@
-from typing import Dict, Text
+from typing import Dict, List, Text
 
 from .heroes import make_heroes
 
 from src.core.events import UpdateEvent
+from src.core.entities import Person
 from src.core.location import Location
 from src.core.scenes import DuelScene, LocationScene, Scene, SelectionScene
 from src.core.scenes import StanzaScene
@@ -10,6 +11,7 @@ from src.core.stanzas.base import Stanza
 
 
 def make_scenes(stanzas: Dict[Text, Stanza],
+                heroes: List[Person],
                 locations: Dict[Text, Location]) -> Scene:
 
     def _ilion_duel_scene_selector(event: UpdateEvent) -> Text:
@@ -18,9 +20,6 @@ def make_scenes(stanzas: Dict[Text, Stanza],
             return "ilion"
         else:
             return "defended_ilion"
-
-    heroes = make_heroes()
-    print([hero.pronoun for hero in heroes])
 
     scenes = {
         # Intro sequence.

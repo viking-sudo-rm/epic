@@ -4,6 +4,7 @@ from typing import Dict, Text
 from src.core.epic import Epic
 from src.core.events import UpdateEvent
 from src.core.stanzas.base import Stanza, TemplateStanza
+from src.world.heroes import make_heroes
 from src.world.locations import make_locations
 from src.world.scenes import make_scenes
 
@@ -22,8 +23,9 @@ def load_stanzas() -> Dict[Text, Stanza]:
 
 def main():
     stanzas = load_stanzas()
+    heroes = make_heroes()
     locations = make_locations()
-    scene, scenes = make_scenes(stanzas, locations)
+    scene, scenes = make_scenes(stanzas, heroes, locations)
     last_scene = None
     epic = Epic()
 
