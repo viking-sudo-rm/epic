@@ -20,15 +20,27 @@ class TemplateStanza(Stanza):
     def generate(self, event: UpdateEvent, long_form=True, **kwargs):
         return "\n".join(self._format(line, event, **kwargs)
                          for line in self._lines
-                         if long_form or self._is_commented(line))
+                         if self._fits_form(line, long_form))
 
     @staticmethod
     def _format(line, event: UpdateEvent, **kwargs):
         # TODO: Should have the capability for conditionals and stuff.
         kwargs["HERO"] = event.epic.hero
-        line = line[2:] if line.startswith("# ") else line
+        line = TemplateStanza._remove_comments(line)
         return line.format(**kwargs).strip()
 
     @staticmethod
-    def _is_commented(line):
-        return line.startswith("# ")
+    def _remove_comments(line):
+        if line.startswith("# ") or line.startswith("! "):
+            return line[2:]
+        else:
+            return line
+
+    @staticmethod
+    def _fits_form(line, long_form):
+        if not long_form and line.startswith("# "):
+            return False
+        elif long_form and line.startswith("! "):
+            return False
+        else:
+            return True
