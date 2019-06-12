@@ -15,7 +15,7 @@ def load_stanzas() -> Dict[Text, Stanza]:
         for file in files:
             path = os.path.join(root, file)
             with open(path) as fh:
-                stanza = TemplateStanza(fh.read())
+                stanza = TemplateStanza(fh.readlines())
                 key = path[6:].replace(".txt", "")
                 stanzas[key] = stanza
     return stanzas
