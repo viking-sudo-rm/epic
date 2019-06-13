@@ -1,7 +1,5 @@
 from typing import Dict, List, Text
 
-from .heroes import make_heroes
-
 from src.core.events import UpdateEvent
 from src.core.entities import Person
 from src.core.location import Location
