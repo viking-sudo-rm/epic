@@ -1,12 +1,12 @@
 from abc import ABCMeta, abstractmethod
 from overrides import overrides
-from typing import Any, Union, Callable, Dict, List, Text
+from typing import Any, Boolean, Union, Callable, List, Text
 import random
 
 from .entities import Entity
 from .epic import Epic
 from .events import UpdateEvent
-from .location import Location
+from .location import Location, Sea
 from .stanzas.base import Stanza
 
 
@@ -16,6 +16,15 @@ class Scene(metaclass=ABCMeta):
     def update(self, event: UpdateEvent):
         """Game logic update (physics, position, etc.)."""
         raise NotImplementedError
+
+    def get_scene(self, name: Any, event: UpdateEvent):
+        """Get next scene from a scene instance, name, or selector object."""
+        if isinstance(name, Scene):
+            return name
+        elif callable(name):
+            name = name(self)
+
+        return event.scenes.get(name, None)
 
 
 NextSceneType = Union[Text, Callable[[UpdateEvent], Text]]
@@ -35,7 +44,7 @@ class StanzaScene(Scene):
         print(text)
         input()
         event.epic.add_stanza(text)
-        return event.get_scene(self._next_scene)
+        return self.get_scene(self._next_scene, event)
 
 
 class SelectionScene(Scene):
@@ -69,15 +78,18 @@ class SelectionScene(Scene):
             print(text)
             input()
             event.epic.add_stanza(text)
-        return event.get_scene(self._next_scene)
+        return self.get_scene(self._next_scene, event)
 
 
 class LocationScene(Scene):
 
-    def __init__(self, location: Location, enter_stanza: Stanza = None):
+    def __init__(self,
+                 location: Location,
+                 enter_stanza: Stanza = None,
+                 always_announce: Boolean = False):
         self._location = location
         self._enter_stanza = enter_stanza
-        self._first_visit = True
+        self._always_announce = always_announce
 
     @overrides
     def update(self, event: UpdateEvent) -> Scene:
@@ -86,26 +98,58 @@ class LocationScene(Scene):
         print("Entities:", self._location._entities)
 
         self._location.update(event)
-        if self._first_visit and self._enter_stanza is not None:
-            text = self._enter_stanza.generate(event, CITY=self._location.placename)
+        if self._enter_stanza is not None and (self._location.first_visit or
+                                               self._always_announce):
+            # TODO: Switch this so that Locations can store an enter scene, and
+            # LocationScenes can store an optional additional stanza.
+            text = self._enter_stanza.generate(event,
+                                               CITY=self._location.placename)
             print(text)
             event.epic.add_stanza(text)
-        self._first_visit = False
+        self.location.first_visit = False
 
         words = input("Action: ").lower().split(" ")
         print()
         action = words[0]
+        args = words[1:]
+
         if action == "quit":
             return None
+
         elif action == "interact":
             for entity in self._location._entities:
-                if entity.name.lower() == words[1]:
+                if entity.name.lower() == args[0]:
                     next_scene = entity.interact(event)
                     return self if next_scene is None else next_scene
-        # elif action == "fight":
-        #     for entity in self._location._entities:
-        #         if entity.name.lower() == words[1]:
-        #             self._location._entities.remove(entity)
+
+        elif action == "sail" and isinstance(self._location, Sea):
+            if not isinstance(self._location, Sea):
+                print("You cannot sail on land!")
+                return self
+            if args[0] == "north":
+                if self._location.north_neighbor is None:
+                    print("There is nothing to the north.")
+                    return self
+                return LocationScene(self._location.north_neighbor)
+            elif args[0] == "east":
+                if self._location.east_neighbor is None:
+                    print("There is nothing to the east.")
+                    return self
+                return LocationScene(self._location.east_neighbor)
+            elif args[0] == "south":
+                if self._location.south_neighbor is None:
+                    print("There is nothing to the south.")
+                    return self
+                return LocationScene(self._location.south_neighbor)
+            elif args[0] == "west":
+                if self._location.west_neighbor is None:
+                    print("There is nothing to the west.")
+                    return self
+                return LocationScene(self._location.west_neighbor)
+            else:
+                print("Invalid direction for sailing: %s." % args[0])
+                return self
+
         else:
             print("Unknown command.")
         return self
@@ -126,7 +170,7 @@ class DuelScene(Scene):
         text = self.get_stock_duel_text(event)
         event.epic.add_stanza(text)
         print(text)
-        return event.get_scene(self._next_scene)
+        return self.get_scene(self._next_scene, event)
 
     def get_stock_duel_text(self, event, weapon="lance"):
         """Return stock duel text picked uniformly at random from duel stanzas."""

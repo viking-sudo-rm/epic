@@ -30,7 +30,9 @@ def make_scenes(stanzas: Dict[Text, Stanza],
         "ilion": LocationScene(locations["ilion"], stanzas["enter_ilion"]),
 
         # Run away.
-        "sea_escape": StanzaScene(stanzas["sea_escape"], next_scene="sea"),
+        "sea_escape": StanzaScene(stanzas["sea_escape"],
+                                  next_scene="east_nostratic"),
+        "east_nostratic": LocationScene(locations["east_nostratic"]),
 
         # Defend Ilion.
         "duel_polypugnos": DuelScene(locations["ilion"]._entities[0],
@@ -38,6 +40,7 @@ def make_scenes(stanzas: Dict[Text, Stanza],
         "duel_nemeson": DuelScene(locations["ilion"]._entities[1],
                                   next_scene=_ilion_duel_scene_selector),
         "defended_ilion": LocationScene(locations["ilion"],
-                                        stanzas["defended_ilion"]),
+                                        stanzas["defended_ilion"],
+                                        always_announce=True),
     }
     return scenes["muse"], scenes

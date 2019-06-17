@@ -10,6 +10,7 @@ class Location:
     def __init__(self, placename: Text, entities: List[Entity] = []):
         self.placename = placename
         self._entities = entities
+        self.first_visit = True
         for entity in self._entities:
             entity.location = self
 
@@ -24,3 +25,21 @@ class Location:
 
     def update(self, event: UpdateEvent):
         pass
+
+
+class Sea(Location):
+
+    """A Location from which we can sail to other locations."""
+
+    def __init__(self,
+                 placename: Text,
+                 entities: List[Entity] = [],
+                 north_neighbor: Location = None,
+                 east_neighbor: Location = None,
+                 south_neighbor: Location = None,
+                 west_neighbor: Location = None):
+        super().__init__(placename, entities)
+        self.north_neighbor = north_neighbor
+        self.east_neighbor = east_neighbor
+        self.south_neighbor = south_neighbor
+        self.west_neighbor = west_neighbor
