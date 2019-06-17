@@ -1,0 +1,7 @@
+And the widowed queen Maliket, spoke:
+
+"Who is this one, strong and charming,
+that comes my way?"
+
+"I feel the strings of my heart sewn to {HERO.pronoun.acc},
+By the loom of the Fates, or perhaps by something stronger..."

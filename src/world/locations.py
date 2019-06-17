@@ -28,8 +28,12 @@ def make_locations() -> Dict[Text, Location]:
         Object("Dock", callback_fn=_dock_callback_fn),
     ]
 
+    carthage_entities = [
+        Person("Maliket", dialog_name="dialog/maliket"),
+    ]
+
     ilion = Location("Ilion", ilion_entities)
-    carthage = Location("Carthage")
+    carthage = Location("Carthage", carthage_entities)
 
     east_nostratic = Sea("East Nostratic Sea")
     west_nostratic = Sea("West Nostratic Sea")

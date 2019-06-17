@@ -1,9 +1,9 @@
 from abc import ABCMeta, abstractmethod
 from overrides import overrides
-from typing import Any, Boolean, Union, Callable, List, Text
+from typing import Any, Union, Callable, List, Text
 import random
 
-from .entities import Entity
+from .entities import Entity, Person
 from .epic import Epic
 from .events import UpdateEvent
 from .location import Location, Sea
@@ -86,7 +86,7 @@ class LocationScene(Scene):
     def __init__(self,
                  location: Location,
                  enter_stanza: Stanza = None,
-                 always_announce: Boolean = False):
+                 always_announce: bool = False):
         self._location = location
         self._enter_stanza = enter_stanza
         self._always_announce = always_announce
@@ -106,7 +106,7 @@ class LocationScene(Scene):
                                                CITY=self._location.placename)
             print(text)
             event.epic.add_stanza(text)
-        self.location.first_visit = False
+        self._location.first_visit = False
 
         words = input("Action: ").lower().split(" ")
         print()
@@ -121,6 +121,19 @@ class LocationScene(Scene):
                 if entity.name.lower() == args[0]:
                     next_scene = entity.interact(event)
                     return self if next_scene is None else next_scene
+
+        elif action == "talk":
+            for entity in self._location._entities:
+                if entity.name.lower() == args[0]:
+                    if not isinstance(entity, Person):
+                        print("You can only talk to people.")
+                        return self
+                    elif entity.dialog_name is None:
+                        print("This character has nothing to say.")
+                    else:
+                        print(event.stanzas.keys())
+                        stanza = event.stanzas[entity.dialog_name]
+                        return DialogScene(stanza, entity)
 
         elif action == "sail" and isinstance(self._location, Sea):
             if not isinstance(self._location, Sea):
@@ -186,10 +199,26 @@ class DuelScene(Scene):
         return self._enemy.location
 
 
+class DialogScene(Scene):
+
+    def __init__(self, stanza: Stanza, entity: Entity):
+        self._stanza = stanza
+        self._entity = entity
+
+    @overrides
+    def update(self, event: UpdateEvent) -> Scene:
+        print("=" * 10, "DIALOG", "=" * 10)
+        text = self._stanza.generate(event)
+        event.epic.add_stanza(text)
+        print(text)
+        input()
+        return LocationScene(self._entity.location)
+
+
 class EndScene(Scene):
 
     def __init__(self, stanza: Stanza, character: Entity):
-        self._stanza = Stanza
+        self._stanza = stanza
         self._character = character
 
     @overrides

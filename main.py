@@ -13,7 +13,8 @@ def load_stanzas() -> Dict[Text, Stanza]:
     stanzas = {}
     for root, dirs, files in os.walk("texts"):
         for file in files:
-            path = os.path.join(root, file)
+            path = root + "/" + file  # This is easier than using variable sep.
+            # path = os.path.join(root, file)
             with open(path) as fh:
                 stanza = TemplateStanza(fh.readlines())
                 key = path[6:].replace(".txt", "")
