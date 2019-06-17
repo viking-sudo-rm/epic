@@ -6,3 +6,10 @@ class UpdateEvent:
         self.last_scene = last_scene
         self.stanzas = stanzas
         self.scenes = scenes
+
+
+class InteractEvent:
+
+    def __init__(self, update_event, entity):
+        self.update_event = update_event
+        self.entity = entity

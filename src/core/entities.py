@@ -1,6 +1,6 @@
 from typing import Callable, Text
 
-from .events import UpdateEvent
+from .events import InteractEvent, UpdateEvent
 from .pronouns import Pronoun
 
 
@@ -18,7 +18,8 @@ class Entity:
 
     def interact(self, event: UpdateEvent):
         if self._callback_fn is not None:
-            return self._callback_fn(event)
+            interact_event = InteractEvent(event, self)
+            return self._callback_fn(interact_event)
         else:
             print("There's nothing to do here.")
             return None

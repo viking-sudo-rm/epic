@@ -7,7 +7,9 @@ class Location:
 
     """Class containing characters, buildings, etc."""
 
-    def __init__(self, placename: Text, entities: List[Entity] = []):
+    def __init__(self,
+                 placename: Text,
+                 entities: List[Entity] = []):
         self.placename = placename
         self._entities = entities
         self.first_visit = True
