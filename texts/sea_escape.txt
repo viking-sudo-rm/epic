@@ -5,4 +5,4 @@ Survival and renewal.
 The waves crash as {HERO.name} boards the ship.
 Burning homeland behind {HERO.pronoun.acc},
 New opportunity in front.
-It was time to set a new foot forward.
+It is time to set a new foot forward.

@@ -3,7 +3,7 @@ from typing import Callable, Dict, Text
 from src.core.entities import Object, Person
 from src.core.events import InteractEvent
 from src.core.location import Location, Sea
-from src.core.scenes import LocationScene, Scene
+from src.core.scenes import LocationScene, Scene, StanzaScene
 
 
 def _make_ilion_duel_callback_fn(person: Text) -> Callable[[InteractEvent],
@@ -24,6 +24,13 @@ def _make_new_dock(sea: Sea) -> Object:
     return Object("Dock", callback_fn=callback_fn)
 
 
+def _maliket_callback_fn(interact_event: InteractEvent):
+    interact_event.entity.lover = interact_event.update_event.epic.hero
+    stanza = interact_event.update_event.stanzas["maliket_cave"]
+    next_scene = LocationScene(interact_event.entity.location)
+    return StanzaScene(stanza, next_scene)
+
+
 def make_locations() -> Dict[Text, Location]:
 
     east_nostratic = Sea("East Nostratic Sea")
@@ -38,7 +45,9 @@ def make_locations() -> Dict[Text, Location]:
     ]
 
     karthago_entities = [
-        Person("Maliket", dialog_name="dialog/maliket"),
+        Person("Maliket",
+               dialog_name="dialog/maliket",
+               callback_fn=_maliket_callback_fn),
         _make_new_dock(west_nostratic),
     ]
 

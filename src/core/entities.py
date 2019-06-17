@@ -42,6 +42,7 @@ class Person(Entity):
         super().__init__(name, **kwargs)
         self.pronoun = pronoun
         self.dialog_name = dialog_name
+        self.lover = None
 
 
 class Object(Entity):
