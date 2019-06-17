@@ -29,11 +29,6 @@ def make_scenes(stanzas: Dict[Text, Stanza],
                                       next_scene="ilion"),
         "ilion": LocationScene(locations["ilion"], stanzas["enter_ilion"]),
 
-        # Run away.
-        "sea_escape": StanzaScene(stanzas["sea_escape"],
-                                  next_scene="east_nostratic"),
-        "east_nostratic": LocationScene(locations["east_nostratic"]),
-
         # Defend Ilion.
         "duel_polypugnos": DuelScene(locations["ilion"]._entities[0],
                                      next_scene=_ilion_duel_scene_selector),

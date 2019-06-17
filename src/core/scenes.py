@@ -72,7 +72,7 @@ class SelectionScene(Scene):
                 selection = option
                 break
         self._select_fn(event.epic)(selection)
-        stanza_name = "select_" + self._value_fn(selection)
+        stanza_name = "select/" + self._value_fn(selection)
         if stanza_name in event.stanzas:
             text = event.stanzas[stanza_name].generate(event)
             print(text)
@@ -87,26 +87,26 @@ class LocationScene(Scene):
                  location: Location,
                  enter_stanza: Stanza = None,
                  always_announce: bool = False):
-        self._location = location
+        self.location = location
         self._enter_stanza = enter_stanza
         self._always_announce = always_announce
 
     @overrides
     def update(self, event: UpdateEvent) -> Scene:
         print("=" * 10, "LOCATION", "=" * 10)
-        print("Location:", self._location.placename)
-        print("Entities:", self._location._entities)
+        print("Location:", self.location.placename)
+        print("Entities:", self.location._entities)
 
-        self._location.update(event)
-        if self._enter_stanza is not None and (self._location.first_visit or
+        self.location.update(event)
+        if self._enter_stanza is not None and (self.location.first_visit or
                                                self._always_announce):
             # TODO: Switch this so that Locations can store an enter scene, and
             # LocationScenes can store an optional additional stanza.
             text = self._enter_stanza.generate(event,
-                                               CITY=self._location.placename)
+                                               CITY=self.location.placename)
             print(text)
             event.epic.add_stanza(text)
-        self._location.first_visit = False
+        self.location.first_visit = False
 
         words = input("Action: ").lower().split(" ")
         print()
@@ -117,13 +117,13 @@ class LocationScene(Scene):
             return None
 
         elif action == "interact":
-            for entity in self._location._entities:
+            for entity in self.location._entities:
                 if entity.name.lower() == args[0]:
                     next_scene = entity.interact(event)
                     return self if next_scene is None else next_scene
 
         elif action == "talk":
-            for entity in self._location._entities:
+            for entity in self.location._entities:
                 if entity.name.lower() == args[0]:
                     if not isinstance(entity, Person):
                         print("You can only talk to people.")
@@ -134,30 +134,30 @@ class LocationScene(Scene):
                         stanza = event.stanzas[entity.dialog_name]
                         return DialogScene(stanza, entity)
 
-        elif action == "sail" and isinstance(self._location, Sea):
-            if not isinstance(self._location, Sea):
+        elif action == "sail" and isinstance(self.location, Sea):
+            if not isinstance(self.location, Sea):
                 print("You cannot sail on land!")
                 return self
             if args[0] == "north":
-                if self._location.north_neighbor is None:
+                if self.location.north_neighbor is None:
                     print("There is nothing to the north.")
                     return self
-                return LocationScene(self._location.north_neighbor)
+                return LocationScene(self.location.north_neighbor)
             elif args[0] == "east":
-                if self._location.east_neighbor is None:
+                if self.location.east_neighbor is None:
                     print("There is nothing to the east.")
                     return self
-                return LocationScene(self._location.east_neighbor)
+                return LocationScene(self.location.east_neighbor)
             elif args[0] == "south":
-                if self._location.south_neighbor is None:
+                if self.location.south_neighbor is None:
                     print("There is nothing to the south.")
                     return self
-                return LocationScene(self._location.south_neighbor)
+                return LocationScene(self.location.south_neighbor)
             elif args[0] == "west":
-                if self._location.west_neighbor is None:
+                if self.location.west_neighbor is None:
                     print("There is nothing to the west.")
                     return self
-                return LocationScene(self._location.west_neighbor)
+                return LocationScene(self.location.west_neighbor)
             else:
                 print("Invalid direction for sailing: %s." % args[0])
                 return self

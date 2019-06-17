@@ -14,13 +14,21 @@ def _make_ilion_duel_callback_fn(person: Text) -> Callable[[InteractEvent],
 
 
 def _make_new_dock(sea: Sea) -> Object:
-    def callback_fn(event: InteractEvent):
-        event = event.update_event
+    def callback_fn(interact_event: InteractEvent):
+        event = interact_event.update_event
+        next_scene = LocationScene(sea)
         if event.scene is event.scenes["ilion"]:
             # If we are in the Ilion battle, do the escape scene.
-            return event.scenes["sea_escape"]
-        else:
-            return LocationScene(sea)
+            stanza = event.stanzas["sea_escape"]
+            return StanzaScene(stanza, next_scene)
+        elif isinstance(event.scene, LocationScene):
+            # If we're ditching Maliket, kill her.
+            maliket = event.scene.location.get_entity("Maliket")
+            if maliket is not None and maliket.lover is event.epic.hero:
+                maliket.kill()
+                stanza = event.stanzas["maliket_suicide"]
+                return StanzaScene(stanza, next_scene)
+        return next_scene
     return Object("Dock", callback_fn=callback_fn)
 
 
@@ -56,7 +64,7 @@ def make_locations() -> Dict[Text, Location]:
     medinta_baal = Location("Medinta Baal", [_make_new_dock(east_nostratic)])
     os_aegypta = Location("Os Aegypta", [_make_new_dock(east_nostratic)])
 
-    # TODO: Allow going back to ruined Ilion?
+    # TODO: Close ports in Ilion/Karthago?
     # east_nostratic.north_neighbor = ilion
     east_nostratic.west_neighbor = west_nostratic
     east_nostratic.east_neighbor = medinta_baal

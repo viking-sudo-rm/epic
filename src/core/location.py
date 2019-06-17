@@ -19,8 +19,7 @@ class Location:
 
     def get_entity(self, name: Text) -> Entity:
         # TODO: Might want to change implementation of self._entities.
-        name_predicate = lambda entity: entity.name == name
-        results = filter(name_predicate, self._entities)
+        results = [ent for ent in self._entities if ent.name == name]
         return results[0] if len(results) > 0 else None
 
     def remove_entity(self, entity: Entity):
