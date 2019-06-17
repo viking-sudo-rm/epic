@@ -18,7 +18,7 @@ def _make_new_dock(sea: Sea) -> Object:
         event = event.update_event
         if event.scene is event.scenes["ilion"]:
             # If we are in the Ilion battle, do the escape scene.
-            return event.update_event.scenes["sea_escape"]
+            return event.scenes["sea_escape"]
         else:
             return LocationScene(sea)
     return Object("Dock", callback_fn=callback_fn)
@@ -54,6 +54,8 @@ def make_locations() -> Dict[Text, Location]:
     east_nostratic.south_neighbor = os_aegypta
     west_nostratic.east_neighbor = east_nostratic
     west_nostratic.south_neighbor = karthago
+
+    # TODO: Have ports/islands in the seas? Cyclops battle.
 
     return {
         "ilion": ilion,

@@ -131,7 +131,6 @@ class LocationScene(Scene):
                     elif entity.dialog_name is None:
                         print("This character has nothing to say.")
                     else:
-                        print(event.stanzas.keys())
                         stanza = event.stanzas[entity.dialog_name]
                         return DialogScene(stanza, entity)
 

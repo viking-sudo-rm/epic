@@ -3,6 +3,7 @@ from typing import List, Text
 from .entities import Entity
 from .events import UpdateEvent
 
+
 class Location:
 
     """Class containing characters, buildings, etc."""
