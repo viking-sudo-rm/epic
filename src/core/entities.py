@@ -1,4 +1,4 @@
-from typing import Callable, Text
+from typing import Callable, List, Text
 
 from .events import InteractEvent, UpdateEvent
 from .pronouns import Pronoun
@@ -38,11 +38,16 @@ class Person(Entity):
                  name,
                  pronoun=Pronoun.MASCULINE,
                  dialog_name: Text = None,
+                 attributes: List[Text] = [],
                  **kwargs):
         super().__init__(name, **kwargs)
         self.pronoun = pronoun
         self.dialog_name = dialog_name
         self.lover = None
+        self.attributes = attributes
+
+    def add_attribute(self, attribute: Text):
+        self.attributes.append(attribute)
 
 
 class Object(Entity):

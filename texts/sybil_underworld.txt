@@ -1,0 +1,8 @@
+The Sybil blessed {HERO.name} the Widower,
+And spun open a raging vortex in the eternal Lake:
+"Through the dying rage of that Queen may we open this portal."
+
+{HERO.name} entered the bottomless abyss.
+Suddenly, {HERO.pronoun.nom} found {HERO.pronoun.acc}self in a dark wood.
+To the right, a grim roadsign:
+"Lasciate ogne speranza, voi ch'intrate."

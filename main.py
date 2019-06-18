@@ -31,7 +31,8 @@ def main():
     epic = Epic()
 
     while scene is not None:
-        update_event = UpdateEvent(epic, scene, last_scene, scenes, stanzas)
+        update_event = UpdateEvent(epic, scene, last_scene, scenes, stanzas,
+                                   locations)
         last_scene = scene
         scene = scene.update(update_event)
 

@@ -214,6 +214,22 @@ class DialogScene(Scene):
         return LocationScene(self._entity.location)
 
 
+class TragedyScene(Scene):
+    """When a player loses instead of reaching an ending."""
+
+    def __init__(self, stanza: Stanza):
+        self._stanza = stanza
+
+    @overrides
+    def update(self, event: UpdateEvent) -> Scene:
+        print("=" * 10, "TRAGEDY", "=" * 10)
+        text = self._stanza.generate(event)
+        print(text)
+        event.epic.add_stanza(text)
+        input()
+        return None
+
+
 class EndScene(Scene):
 
     def __init__(self, stanza: Stanza, character: Entity):
@@ -225,7 +241,7 @@ class EndScene(Scene):
         print("=" * 10, "ENDING", "=" * 10)
         text = self._stanza.generate(event)
         print(text)
-        print("Unlocked", character)
+        print("Unlocked", self._character)
         input()
         event.epic.add_stanza(text)
         return None
