@@ -3,8 +3,11 @@ from typing import Dict, List, Text
 from src.core.events import UpdateEvent
 from src.core.entities import Person
 from src.core.location import Location
-from src.core.scenes import DuelScene, LocationScene, Scene, SelectionScene
-from src.core.scenes import StanzaScene
+from src.core.scenes.base import Scene
+from src.core.scenes.duel import DuelScene
+from src.core.scenes.location import LocationScene
+from src.core.scenes.selection import SelectionScene
+from src.core.scenes.stanza import StanzaScene
 from src.core.stanzas.base import Stanza
 
 

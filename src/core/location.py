@@ -18,8 +18,8 @@ class Location:
             entity.location = self
 
     def get_entity(self, name: Text) -> Entity:
-        # TODO: Might want to change implementation of self._entities.
-        results = [ent for ent in self._entities if ent.name == name]
+        results = [ent for ent in self._entities
+                   if ent.name.lower() == name.lower()]
         return results[0] if len(results) > 0 else None
 
     def remove_entity(self, entity: Entity):

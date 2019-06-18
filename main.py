@@ -3,6 +3,8 @@ from typing import Dict, Text
 
 from src.core.epic import Epic
 from src.core.events import UpdateEvent
+from src.core.scenes.dialog import DialogScene
+from src.core.scenes.location import LocationScene
 from src.core.stanzas.base import Stanza, TemplateStanza
 from src.world.heroes import make_heroes
 from src.world.locations import make_locations
@@ -32,7 +34,7 @@ def main():
 
     while scene is not None:
         update_event = UpdateEvent(epic, scene, last_scene, scenes, stanzas,
-                                   locations)
+                                   locations, DialogScene, LocationScene)
         last_scene = scene
         scene = scene.update(update_event)
 
