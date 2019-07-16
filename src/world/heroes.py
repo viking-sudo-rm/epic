@@ -9,5 +9,5 @@ def make_heroes() -> List[Person]:
         Person("Dido",
                attributes=["Burning", "Vengeful"],
                pronoun=Pronoun.FEMININE),
-        Person("Beowulf", attributes=["Adventurer", "Loyal"]),
+        Person("Beowulf", attributes=["Adventurous", "Loyal"]),
     ]

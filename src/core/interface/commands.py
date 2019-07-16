@@ -165,9 +165,7 @@ class SayCommand(Command):
         idx = int(event.args[0])
         scene = event.update_event.scene
         option = scene.options[idx]
-
-        print("FIXME: Selected option %s." % option)
-        return None
+        return option(event.update_event)
 
     @overrides
     def help(self) -> Text:

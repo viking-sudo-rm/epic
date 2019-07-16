@@ -1,3 +1,4 @@
+import random
 from typing import Callable, List, Text
 
 from .events import InteractEvent, UpdateEvent
@@ -48,6 +49,13 @@ class Person(Entity):
 
     def add_attribute(self, attribute: Text):
         self.attributes.append(attribute)
+
+    @property
+    def random_attribute(self):
+        if len(self.attributes) == 0:
+            return "Heroic"
+        else:
+            return random.choice(self.attributes)
 
 
 class Object(Entity):
