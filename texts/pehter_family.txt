@@ -1,0 +1,11 @@
+Pehter spoke:
+
+"Our family, our gods,
+you shall bring to new shores!
+Settle among foreign men,
+Raise your family,
+And rebuild the line of Ilion."
+
+{HERO.name} drifted off to sleep.
+{HERO.pronoun.nom} awoke in a field,
+And glimpsed a gleaming city in the distance.

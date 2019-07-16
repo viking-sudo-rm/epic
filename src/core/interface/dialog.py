@@ -12,7 +12,5 @@ class DialogOption:
     def __call__(self, event: UpdateEvent) -> Scene:
         hero_attribute = event.epic.hero.random_attribute
         event.epic.add_stanza("Our %s hero spoke:" % hero_attribute)
-        event.epic.add_stanza(option.text)
-        # The callback should return None if we want to go back to the entity's
-        # location.
-        return callback_fn(event)
+        event.epic.add_stanza(self.text)
+        return self._callback_fn(event)

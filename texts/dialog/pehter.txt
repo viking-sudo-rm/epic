@@ -1,0 +1,6 @@
+Pehter, our hero's father, spoke:
+
+"Hail, my {HERO.random_attribute} child!
+What maketh thee
+brave these ghastly lands?
+For nation, family, or thyself?"

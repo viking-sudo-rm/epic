@@ -20,7 +20,7 @@ class Command(metaclass=ABCMeta):
 
     @staticmethod
     def _print_too_many_args(cmd_name):
-        print("Too many arguments for %s." % cmd_name)
+        print("Wrong number of arguments for %s." % cmd_name)
 
     @staticmethod
     def _same_scene(cmd_event: CommandEvent) -> Scene:
@@ -84,7 +84,7 @@ class InteractCommand(Command):
 
     @overrides
     def help(self) -> Text:
-        return "Interact with an entity in your current location."
+        return "Interact with an entity in your current location. Example: 'interact dido'."
 
 
 class TalkCommand(Command):
@@ -112,7 +112,7 @@ class TalkCommand(Command):
 
     @overrides
     def help(self) -> Text:
-        return "Talk to an entity in your current location."
+        return "Talk to an entity in your current location. Example: 'talk dido'."
 
 
 class SailCommand(Command):
@@ -164,7 +164,7 @@ class SayCommand(Command):
 
         idx = int(event.args[0])
         scene = event.update_event.scene
-        option = scene.options[idx]
+        option = scene.get_option(idx)
         return option(event.update_event)
 
     @overrides

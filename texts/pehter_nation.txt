@@ -1,0 +1,16 @@
+Pehter spoke:
+
+"Our nation, Ilion,
+that you shall rebuild on foreign shores!"
+
+"Others will excel at stargazing,
+At reaching new lands,
+At the arts of marble and word.
+Ilion's strength is Order,
+Bringing peace to every land.
+Remember to lift up the oppressed,
+And to crush the haughty."
+
+{HERO.name} drifted off to sleep.
+{HERO.pronoun.nom} awoke in a field,
+And glimpsed a gleaming city in the distance.

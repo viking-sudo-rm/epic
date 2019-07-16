@@ -4,7 +4,7 @@ from typing import List
 from .base import Scene
 from ..entities import Entity
 from ..events import UpdateEvent
-from ..interface.commands import QuitCommand, SayCommand
+from ..interface.commands import HelpCommand, QuitCommand, SayCommand
 from ..interface.dialog import DialogOption
 from .location import LocationScene
 from ..stanzas.base import Stanza
@@ -14,16 +14,13 @@ class DialogScene(Scene):
 
     _CMD_MAPPING = {
         "quit": QuitCommand(),
+        "help": HelpCommand(),
         "say": SayCommand(),
     }
 
-    def __init__(self,
-                 stanza: Stanza,
-                 entity: Entity,
-                 options: List[DialogOption] = []):
+    def __init__(self, stanza: Stanza, entity: Entity):
         self._stanza = stanza
         self._entity = entity
-        self._options = options
 
     @overrides
     def update(self, event: UpdateEvent) -> Scene:
@@ -32,14 +29,20 @@ class DialogScene(Scene):
         event.epic.add_stanza(text)
         print(text)
         
-        if self._options:
-            for idx, option in enumerate(self._options):
-                print("%d. %s\n" % (idx, option))
-            next_scene = self._parse_and_exec_cmd(event)
-            if next_scene is not None:
-                return next_scene
+        if self._entity.dialog_options:
+            print()
+            for idx, option in enumerate(self._entity.dialog_options):
+                print("%d. %s\n" % (idx, option.text))
+            return self._parse_and_exec_cmd(event)
 
         else:
             input()
         
-        return LocationScene(self._entity.location)
+        return LocationScene(self.location)
+
+    def get_option(self, idx):
+        return self._entity.dialog_options[idx]
+
+    @property
+    def location(self):
+        return self._entity.location

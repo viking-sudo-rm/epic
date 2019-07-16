@@ -1,7 +1,8 @@
 from typing import Callable, Dict, Text
 
 from src.core.entities import Object, Person
-from src.core.events import InteractEvent
+from src.core.events import InteractEvent, UpdateEvent
+from src.core.interface.dialog import DialogOption
 from src.core.location import Location, Sea
 from src.core.scenes.base import Scene
 from src.core.scenes.dialog import DialogScene
@@ -55,6 +56,38 @@ def _sybil_callback_fn(interact_event: InteractEvent) -> Scene:
         return DialogScene(stanza, interact_event.entity)
 
 
+def _pehter_nation_callback_fn(update_event: UpdateEvent) -> Scene:
+    # TODO: Might want to refactor the dialog system.
+    pehter = update_event.scene._entity
+    pehter.dialog_name = None
+    pehter.dialog_options = []
+
+    stanza = update_event.stanzas["pehter_nation"]
+    next_scene = LocationScene(update_event.locations["alba"])
+    return StanzaScene(stanza, next_scene)
+
+
+def _pehter_family_callback_fn(update_event: UpdateEvent) -> Scene:
+    # TODO: Might want to refactor the dialog system.
+    pehter = update_event.scene._entity
+    pehter.dialog_name = None
+    pehter.dialog_options = []
+
+    stanza = update_event.stanzas["pehter_family"]
+    next_scene = LocationScene(update_event.locations["alba"])
+    return StanzaScene(stanza, next_scene)
+
+
+def _pehter_self_callback_fn(update_event: UpdateEvent) -> Scene:
+    # TODO: Might want to refactor the dialog system.
+    pehter = update_event.scene._entity
+    pehter.dialog_name = None
+    pehter.dialog_options = []
+
+    stanza = update_event.stanzas["pehter_self"]
+    return DialogScene(stanza, pehter)
+
+
 def make_locations() -> Dict[Text, Location]:
 
     east_nostratic = Sea("East Nostratic Sea")
@@ -82,12 +115,26 @@ def make_locations() -> Dict[Text, Location]:
         _make_new_dock(west_nostratic),
     ]
 
+    inferno_entities = [
+        Person("Pehter",
+               dialog_name="dialog/pehter",
+               dialog_options=[
+                    DialogOption("I came for my nation.",
+                                 _pehter_nation_callback_fn),
+                    DialogOption("I came for my family.",
+                                 _pehter_family_callback_fn),
+                    DialogOption("I came for myself.",
+                                 _pehter_self_callback_fn),
+               ])
+    ]
+
     ilion = Location("Ilion", ilion_entities)
     karthago = Location("Karthago", karthago_entities)
     medinta_baal = Location("Medinta Baal", [_make_new_dock(east_nostratic)])
     os_aegypta = Location("Os Aegypta", [_make_new_dock(east_nostratic)])
     cimmeria = Location("Cimmeria", cimmeria_entities)
-    inferno = Location("Inferno", [])
+    inferno = Location("Inferno", inferno_entities)
+    alba = Location("Alba", [])
 
     # TODO: Close ports in Ilion/Karthago?
     # east_nostratic.north_neighbor = ilion
@@ -110,4 +157,5 @@ def make_locations() -> Dict[Text, Location]:
         "os_aegypta": os_aegypta,
         "cimmeria": cimmeria,
         "inferno": inferno,
+        "alba": alba,
     }

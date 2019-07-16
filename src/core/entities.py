@@ -2,6 +2,7 @@ import random
 from typing import Callable, List, Text
 
 from .events import InteractEvent, UpdateEvent
+from .interface.dialog import DialogOption
 from .pronouns import Pronoun
 
 
@@ -39,11 +40,14 @@ class Person(Entity):
                  name,
                  pronoun=Pronoun.MASCULINE,
                  dialog_name: Text = None,
+                 dialog_options: List[DialogOption] = [],
                  attributes: List[Text] = [],
                  **kwargs):
         super().__init__(name, **kwargs)
         self.pronoun = pronoun
         self.dialog_name = dialog_name
+        # TODO: Can probably refactor how DialogScenes are created.
+        self.dialog_options = dialog_options
         self.lover = None
         self.attributes = attributes
 
