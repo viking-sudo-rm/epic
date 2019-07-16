@@ -49,7 +49,7 @@ class HelpCommand(Command):
         if len(event.args) == 0:
             cmds = event.cmd_mapping.keys()
             print(", ".join(cmds))
-            print("Type help CMD to get more information about CMD.")
+            print("Type 'help CMD' to get more information about CMD.")
         elif len(event.args) == 1:
             if event.args[0] in event.cmd_mapping.keys():
                 help_text = event.cmd_mapping[event.args[0]].help()
