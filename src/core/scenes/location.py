@@ -1,7 +1,7 @@
 from overrides import overrides
 
 from .base import Scene
-from ..events import CommandEvent, UpdateEvent
+from ..events import UpdateEvent
 from ..interface.commands import HelpCommand, QuitCommand, InteractCommand
 from ..interface.commands import TalkCommand, SailCommand
 from ..location import Location
@@ -43,13 +43,4 @@ class LocationScene(Scene):
             event.epic.add_stanza(text)
         self.location.first_visit = False
 
-        words = input("Action: ").lower().split(" ")
-        print()
-        cmd = words[0]
-        args = words[1:]
-        cmd_event = CommandEvent(event, cmd, args, self._CMD_MAPPING)
-        if cmd in self._CMD_MAPPING:
-            return self._CMD_MAPPING[cmd](cmd_event)
-        else:
-            print("Unknown command.")
-            return self
+        return self._parse_and_exec_cmd(event)

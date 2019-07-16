@@ -1,10 +1,13 @@
 from abc import ABCMeta, abstractmethod
 from typing import Any, Callable, Text, Union
 
-from ..events import UpdateEvent
+from ..events import CommandEvent, UpdateEvent
 
 
 class Scene(metaclass=ABCMeta):
+
+    # This should be overriden in superclasses with commands.
+    _CMD_MAPPING = {}
 
     @abstractmethod
     def update(self, event: UpdateEvent):
@@ -19,6 +22,19 @@ class Scene(metaclass=ABCMeta):
             name = name(self)
 
         return event.scenes.get(name, None)
+
+    def _parse_and_exec_cmd(self, event: UpdateEvent):
+        words = input("Action: ").lower().split(" ")
+        print()
+        cmd = words[0]
+        args = words[1:]
+        cmd_event = CommandEvent(event, cmd, args, self._CMD_MAPPING)
+
+        if cmd in self._CMD_MAPPING:
+            return self._CMD_MAPPING[cmd](cmd_event)
+        else:
+            print("Unknown command.")
+            return self
 
 
 NextSceneType = Union[Text, Callable[[UpdateEvent], Text]]

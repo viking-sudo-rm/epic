@@ -48,8 +48,8 @@ class HelpCommand(Command):
     def __call__(self, event: CommandEvent) -> Scene:
         if len(event.args) == 0:
             cmds = event.cmd_mapping.keys()
-            print(", ".join(cmds))
-            print("Type 'help CMD' to get more information about CMD.")
+            print("Commands:", ", ".join(cmds))
+            print("Type 'help CMD' to get more information about a specific command.")
         elif len(event.args) == 1:
             if event.args[0] in event.cmd_mapping.keys():
                 help_text = event.cmd_mapping[event.args[0]].help()
@@ -150,3 +150,26 @@ class SailCommand(Command):
     @overrides
     def help(self) -> Text:
         return "Sail north, east, south, or west (only while on the sea)."
+
+
+class SayCommand(Command):
+
+    """Command for choosing from a list of dialog options."""
+
+    @overrides
+    def __call__(self, event: CommandEvent) -> Scene:
+        if len(event.args) != 1:
+            self._print_too_many_args(event.cmd)
+            return self._same_scene(event)
+
+        idx = int(event.args[0])
+        scene = event.update_event.scene
+        option = scene.options[idx]
+
+        print("FIXME: Selected option %s." % option)
+        return None
+
+    @overrides
+    def help(self) -> Text:
+        return "Choose from a list of dialog options. Example: 'choose 1' to choose option #1."
+
