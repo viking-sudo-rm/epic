@@ -1,0 +1,16 @@
+{HERO.name} reached out {HERO.pronoun.gen} hand
+To touch Iustititia's palm.
+That touch of hands,
+The meeting of life and death,
+Shocked the nether realm,
+Tore its very fabric
+into a portal.
+
+{HERO.name} and Iustitia jumped
+Into the unknown gate,
+Traversed many abstract realms,
+Until suddenly,
+In a sleepy wood
+Besides a temple
+Wrapped in years of moss,
+Together they appeared.
