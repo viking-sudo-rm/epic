@@ -11,16 +11,17 @@ from src.core.scenes.stanza import StanzaScene
 from src.core.stanzas.base import Stanza
 
 
+def _ilion_duel_scene_selector(event: UpdateEvent) -> Text:
+    ilion = event.scene.location
+    if len(ilion._entities) > 1:
+        return "ilion"
+    else:
+        return "defended_ilion"
+
+
 def make_scenes(stanzas: Dict[Text, Stanza],
                 heroes: List[Person],
                 locations: Dict[Text, Location]) -> Scene:
-
-    def _ilion_duel_scene_selector(event: UpdateEvent) -> Text:
-        ilion = event.scene.location
-        if len(ilion._entities) > 1:
-            return "ilion"
-        else:
-            return "defended_ilion"
 
     scenes = {
         # Intro sequence.

@@ -1,0 +1,4 @@
+Brutus spoke:
+
+"Hey, {HERO.name}, right? You're my hero man!
+Have you met my girlfriend Calida?"

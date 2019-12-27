@@ -6,14 +6,16 @@ from src.core.interface.dialog import DialogOption
 from src.core.location import Location, Sea
 from src.core.scenes.base import Scene
 from src.core.scenes.dialog import DialogScene
+from src.core.scenes.end import EndScene
 from src.core.scenes.location import LocationScene
 from src.core.scenes.stanza import StanzaScene
 from src.world.locations.utils import make_new_dock
 
 
 def _brutus_callback_fn(interact_event: InteractEvent) -> Scene:
-    # TODO: Fill this in.
-    return None
+    ending = EndScene("hello", None)
+    brutus = interact_event.update_event.locations["ilion"]._entities[1]
+    return DuelScene(brutus, next_scene=ending)
 
 
 def make_alba() -> Location:

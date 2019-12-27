@@ -1,0 +1,16 @@
+And so {HERO.name} chose to strike
+down a friendly face -
+a man who, though possibly an oppressor,
+was certainly not haughty.
+
+{HERO.name} watched Brutus's blood
+flow across the caked clay,
+sowing seeds of absolute empire
+in this young land,
+which one day would
+sow seeds of salt and oppression
+where Maliket had welcomed him.
+
+Turing back towards Alba,
+where Calida awaited him, {HERO.name} hesitated.
+Had {HERO.pronoun.nom} made Pehter proud?
