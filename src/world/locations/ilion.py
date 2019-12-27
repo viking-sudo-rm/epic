@@ -18,7 +18,8 @@ def _make_ilion_duel_callback_fn(person: Text) -> Callable[[InteractEvent],
     return _ilion_duel_callback_fn
 
 
-def make_ilion(east_nostratic: Sea) -> Location:
+def make_ilion(seas: Dict[str, Sea]) -> Location:
+    east_nostratic = seas["east_nostratic"]
 
     ilion_entities = [
         Person("Polypugnos",

@@ -23,7 +23,8 @@ def _sybil_callback_fn(interact_event: InteractEvent) -> Scene:
         return DialogScene(stanza, interact_event.entity)
 
 
-def make_cimmeria(west_nostratic: Sea) -> Location:
+def make_cimmeria(seas: Dict[str, Sea]) -> Location:
+    west_nostratic = seas["west_nostratic"]
 
     cimmeria_entities = [
         Person("Sybil",

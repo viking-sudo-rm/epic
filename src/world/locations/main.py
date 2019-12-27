@@ -9,45 +9,36 @@ from src.core.scenes.dialog import DialogScene
 from src.core.scenes.location import LocationScene
 from src.core.scenes.stanza import StanzaScene
 
+from src.world.locations.seas import make_seas
 from src.world.locations.ilion import make_ilion
 from src.world.locations.karthago import make_karthago
 from src.world.locations.cimmeria import make_cimmeria
 from src.world.locations.inferno import make_inferno
+from src.world.locations.alba import make_alba
+from src.world.locations.medinta_baal import make_medinta_baal
+from src.world.locations.os_aegypta import make_os_aegypta
 
 from src.world.locations.utils import make_new_dock
 
 
 def make_locations() -> Dict[Text, Location]:
+    seas = make_seas()
 
-    # TODO: Add "dock <port>" command to enter ports from the sea. This allows
-    # allowing each sea to have multiple ports (a list which appears to the
-    # player).
-    east_nostratic = Sea("East Nostratic Sea")
-    west_nostratic = Sea("West Nostratic Sea")
-    east_nostratic.west_neighbor = west_nostratic
-    west_nostratic.east_neighbor = east_nostratic
-
-    medinta_baal = Location("Medinta Baal", [make_new_dock(east_nostratic)])
-    os_aegypta = Location("Os Aegypta", [make_new_dock(east_nostratic)])
-    inferno = make_inferno()
-    alba = Location("Alba", [])
+    # TODO: Should we even have proto imperion here?
     proto_imperion = Location("Proto Imperion", [])
-
-    east_nostratic.east_neighbor = medinta_baal
-    east_nostratic.south_neighbor = os_aegypta
 
     # TODO: Have ports/islands in the seas? Cyclops battle.
     # TODO: Need to go to cyclops island to upgrade ship before going further.
 
     return {
-        "east_nostratic": east_nostratic,
-        "west_nostratic": west_nostratic,
-        "ilion": make_ilion(east_nostratic),
-        "karthago": make_karthago(west_nostratic),
-        "medinta_baal": medinta_baal,
-        "os_aegypta": os_aegypta,
-        "cimmeria": make_cimmeria(west_nostratic),
-        "inferno": inferno,
-        "alba": alba,
+        "east_nostratic": seas["east_nostratic"],
+        "west_nostratic": seas["west_nostratic"],
+        "ilion": make_ilion(seas),
+        "karthago": make_karthago(seas),
+        "medinta_baal": make_medinta_baal(seas),
+        "os_aegypta": make_os_aegypta(seas),
+        "cimmeria": make_cimmeria(seas),
+        "inferno": make_inferno(),
+        "alba": make_alba(),
         "proto_imperion": proto_imperion,
     }

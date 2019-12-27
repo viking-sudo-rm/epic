@@ -18,7 +18,8 @@ def _maliket_callback_fn(interact_event: InteractEvent) -> Scene:
     return StanzaScene(stanza, next_scene)
 
 
-def make_karthago(west_nostratic: Sea) -> Location:
+def make_karthago(seas: Dict[str, Sea]) -> Location:
+    west_nostratic = seas["west_nostratic"]
 
     karthago_entities = [
         Person("Maliket",
